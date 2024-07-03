@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenLayers Dynamic Marker</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v9.2.4/ol.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map" class="map"></div>
+    <script src="https://cdn.jsdelivr.net/npm/ol@v9.2.4/dist/ol.js"></script>
+    <script>
+        // Initialize the map
+        var map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([101.741318, 3.012711]),  // Static initial coordinates [lon, lat]
+                zoom: 16
+            })
+        });
+
+        var marker = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: [
+                    new ol.Feature({
+                        geometry: new ol.geom.Point(
+                            ol.proj.fromLonLat([101.741318, 3.012711])
+                        )
+                    })
+                ],
+            }),
+            style: new ol.style.Style({
+                image: new ol.style.Icon({
+                    src: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
+                    anchor: [0.5,1],
+                    scale: 0.05
+                })
+            })
+        })
+
+        map.addLayer(marker)
+
+    </script>
+</body>
+</html>
